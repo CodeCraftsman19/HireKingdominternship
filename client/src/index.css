@@ -1,0 +1,139 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: #7367f0;
+  --secondary-color: #82868b;
+  --success-color: #28c76f;
+  --danger-color: #ea5455;
+  --warning-color: #ff9f43;
+  --info-color: #00cfe8;
+  --dark-color: #4b4b4b;
+  --light-color: #f8f8f8;
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 80px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: #f5f5f9;
+  color: #6e6b7b;
+  margin: 0;
+  min-height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: var(--sidebar-width);
+  background: #fff;
+  box-shadow: 0 4px 24px 0 rgba(34, 41, 47, 0.1);
+  z-index: 1000;
+  transition: all 0.3s ease;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.sidebar.collapsed {
+  width: var(--sidebar-collapsed-width);
+}
+
+.main-content {
+  margin-left: var(--sidebar-width);
+  transition: all 0.3s ease;
+  min-height: 100vh;
+}
+
+.main-content.sidebar-collapsed {
+  margin-left: var(--sidebar-collapsed-width);
+}
+
+/* Navbar Styles */
+.navbar-custom {
+  background: #fff;
+  box-shadow: 0 4px 24px 0 rgba(34, 41, 47, 0.1);
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  height: 70px;
+}
+
+/* Card Styles */
+.card-vuexy {
+  border: none;
+  box-shadow: 0 4px 24px 0 rgba(34, 41, 47, 0.1);
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+  background: #fff;
+}
+
+.card-header-vuexy {
+  background: transparent;
+  border-bottom: 1px solid #ebe9f1;
+  padding: 1.5rem;
+}
+
+.card-body-vuexy {
+  padding: 1.5rem;
+}
+
+/* Button Styles */
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+  background-color: #5e50ee;
+  border-color: #5e50ee;
+}
+
+/* Scrollbar */
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #d0d0d0;
+  border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #b0b0b0;
+}
+
+/* Nav Item Active State */
+.nav-item-active {
+  background-color: rgba(115, 103, 240, 0.1);
+  color: var(--primary-color);
+  border-left: 3px solid var(--primary-color);
+}
+
+/* Search Bar */
+.search-bar {
+  border: 1px solid #d8d6de;
+  border-radius: 0.357rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.857rem;
+}
+
+.search-bar:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(115, 103, 240, 0.25);
+}

@@ -1,0 +1,27 @@
+{
+  "name": "visualization-dashboard-server",
+  "version": "1.0.0",
+  "description": "Backend server for visualization dashboard",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "seed": "node scripts/seedDatabase.js",
+    "check-data": "node scripts/checkData.js",
+    "test-setup": "node scripts/testConnection.js"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^8.21.0",
+    "zod": "^4.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
