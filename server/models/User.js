@@ -8,11 +8,11 @@ const userSchema = mongoose.Schema(
       required: [true, 'Please add a name'],
     },
 
-    username: {
-    type: String,
-    unique: true,
-    sparse: true // ALLOWS nulls
-    },
+    // username: {
+    // type: String,
+    // unique: true,
+    // sparse: true // ALLOWS nulls
+    // },gt
 
     email: {
       type: String,
