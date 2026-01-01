@@ -1,110 +1,113 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import {
   Search,
   Bell,
   Grid3x3,
+  Menu,
   Settings,
   LogOut,
   User
 } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 
-const Navbar = ({ sidebarCollapsed }) => {
+const Navbar = () => {
   const { user, logout } = useAuth();
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
     window.location.href = "/login";
   };
 
+  /* 🔥 NAVBAR-ONLY HAMBURGER FIX */
+  const handleHamburgerClick = () => {
+    const sidebar = document.querySelector(".sidebar");
+    if (sidebar) {
+      sidebar.classList.toggle("mobile-open");
+    }
+  };
+
   return (
-    <nav className="navbar-custom d-flex align-items-center justify-content-between">
-      {/* SEARCH */}
-      <div
-        className="d-flex align-items-center"
-        style={{ flex: 1, maxWidth: "500px" }}
-      >
-        <div className="input-group search-bar">
-          <span className="input-group-text bg-white border-0">
-            <Search size={18} className="text-secondary" />
-          </span>
-          <input
-            type="text"
-            className="form-control border-0"
-            placeholder="Search ⌘K"
-            style={{ fontSize: "0.857rem" }}
-          />
+    <nav className="navbar-custom position-relative d-flex align-items-center justify-content-between">
+      {/* LEFT */}
+      <div className="d-flex align-items-center gap-2">
+        {/* Hamburger (Mobile) */}
+        <button
+          className="btn btn-link d-md-none p-2 border-0"
+          onClick={handleHamburgerClick}
+          aria-label="Toggle Menu"
+        >
+          <Menu size={22} />
+        </button>
+
+        {/* Desktop Search */}
+        <div className="d-none d-md-flex">
+          <div className="input-group search-bar">
+            <span className="input-group-text border-0">
+              <Search size={18} />
+            </span>
+            <input
+              type="text"
+              className="form-control border-0"
+              placeholder="Search ⌘K"
+            />
+          </div>
         </div>
       </div>
 
-      {/* RIGHT ACTIONS */}
+      {/* RIGHT */}
       <div className="d-flex align-items-center gap-2">
-        {/* Language Icon */}
-        <button className="btn btn-link text-secondary p-2 border-0">
-          <span style={{ fontSize: "1.2rem" }}>文A</span>
+        {/* Mobile Search Toggle */}
+        <button
+          className="btn btn-link d-md-none p-2 border-0"
+          onClick={() => setMobileSearchOpen(!mobileSearchOpen)}
+        >
+          <Search size={20} />
         </button>
 
-        {/* ✅ THEME TOGGLE (FIXED) */}
         <ThemeToggle />
 
-        {/* Grid */}
-        <button className="btn btn-link text-secondary p-2 position-relative border-0">
+        {/* Apps */}
+        <button className="btn btn-link p-2 border-0 position-relative">
           <Grid3x3 size={20} />
-          <span
-            className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary"
-            style={{ fontSize: "0.6rem", padding: "0.15rem 0.3rem" }}
-          >
+          <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
             0+
           </span>
         </button>
 
         {/* Notifications */}
-        <button className="btn btn-link text-secondary p-2 position-relative border-0">
+        <button className="btn btn-link p-2 border-0 position-relative">
           <Bell size={20} />
-          <span
-            className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-            style={{ fontSize: "0.6rem", padding: "0.15rem 0.3rem" }}
-          >
+          <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             3
           </span>
         </button>
 
-        {/* USER DROPDOWN */}
+        {/* User */}
         <div className="dropdown">
           <button
-            className="btn btn-link text-decoration-none d-flex align-items-center text-secondary p-0 border-0"
-            type="button"
+            className="btn btn-link d-flex align-items-center text-decoration-none p-0 border-0"
             data-bs-toggle="dropdown"
           >
             <div
               className="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2"
-              style={{
-                width: "38px",
-                height: "38px",
-                fontSize: "14px",
-                fontWeight: "600"
-              }}
+              style={{ width: 36, height: 36, fontWeight: 600 }}
             >
-              {user?.name?.charAt(0).toUpperCase() || "U"}
+              {user?.name?.charAt(0)?.toUpperCase() || "U"}
             </div>
 
-            {!sidebarCollapsed && (
-              <div className="d-flex flex-column align-items-start">
-                <span style={{ fontSize: "0.857rem", fontWeight: "500" }}>
-                  {user?.name || "User"}
-                </span>
-                <span style={{ fontSize: "0.75rem", color: "#b4b7bd" }}>
-                  Admin
-                </span>
-              </div>
-            )}
+            <div className="d-none d-md-flex flex-column align-items-start">
+              <span className="fw-semibold" style={{ fontSize: "0.85rem" }}>
+                {user?.name || "User"}
+              </span>
+              <span style={{ fontSize: "0.75rem", opacity: 0.7 }}>
+                Admin
+              </span>
+            </div>
           </button>
 
-          <ul
-            className="dropdown-menu dropdown-menu-end shadow-lg"
-            style={{ minWidth: "200px" }}
-          >
+          <ul className="dropdown-menu dropdown-menu-end shadow">
             <li>
               <a className="dropdown-item d-flex align-items-center" href="#">
                 <User size={16} className="me-2" />
@@ -117,9 +120,7 @@ const Navbar = ({ sidebarCollapsed }) => {
                 Settings
               </a>
             </li>
-            <li>
-              <hr className="dropdown-divider" />
-            </li>
+            <li><hr className="dropdown-divider" /></li>
             <li>
               <button
                 className="dropdown-item d-flex align-items-center text-danger"
@@ -132,6 +133,23 @@ const Navbar = ({ sidebarCollapsed }) => {
           </ul>
         </div>
       </div>
+
+      {/* MOBILE SEARCH */}
+      {mobileSearchOpen && (
+        <div className="position-absolute top-100 start-0 w-100 p-2 d-md-none">
+          <div className="input-group search-bar">
+            <span className="input-group-text border-0">
+              <Search size={18} />
+            </span>
+            <input
+              type="text"
+              className="form-control border-0"
+              placeholder="Search"
+              autoFocus
+            />
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
