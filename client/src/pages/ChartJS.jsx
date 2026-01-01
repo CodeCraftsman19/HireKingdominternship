@@ -640,10 +640,226 @@
 
 // export default ChartPage;
 
-import React, { useState, useEffect } from 'react';
-import api from '../utils/api';
-import Layout from '../components/Layout';
-import { Filter, MoreVertical } from 'lucide-react';
+// import React, { useState, useEffect } from 'react';
+// import api from '../utils/api';
+// import Layout from '../components/Layout';
+// import { Filter, MoreVertical } from 'lucide-react';
+
+// import {
+//   Chart as ChartJS,
+//   CategoryScale,
+//   LinearScale,
+//   PointElement,
+//   LineElement,
+//   BarElement,
+//   ArcElement,
+//   Title,
+//   Tooltip,
+//   Legend
+// } from 'chart.js';
+
+// import { Line, Bar, Pie, Doughnut } from 'react-chartjs-2';
+
+// // Register ChartJS components
+// ChartJS.register(
+//   CategoryScale,
+//   LinearScale,
+//   PointElement,
+//   LineElement,
+//   BarElement,
+//   ArcElement,
+//   Title,
+//   Tooltip,
+//   Legend
+// );
+
+// const ChartPage = () => {
+//   const [data, setData] = useState([]);
+//   const [filters, setFilters] = useState({
+//     end_year: '',
+//     topics: '',
+//     sector: '',
+//     region: '',
+//     pestle: '',
+//     source: '',
+//     country: '',
+//     city: '',
+//   });
+
+//   const [filterOptions, setFilterOptions] = useState({
+//     endYears: [],
+//     sectors: [],
+//     regions: [],
+//     pestles: [],
+//     sources: [],
+//     countries: [],
+//     cities: [],
+//     topics: [],
+//   });
+
+//   const [loading, setLoading] = useState(true);
+
+//   useEffect(() => {
+//     fetchFilters();
+//     fetchData();
+//   }, []);
+
+//   useEffect(() => {
+//     fetchData();
+//   }, [filters]);
+
+//   const fetchFilters = async () => {
+//     try {
+//       const res = await api.get('/data/filters');
+//       setFilterOptions(res.data.filters);
+//     } catch (err) {
+//       console.error('Filter fetch error:', err);
+//     }
+//   };
+
+//   const fetchData = async () => {
+//     try {
+//       const params = Object.fromEntries(
+//         Object.entries(filters).filter(([_, v]) => v !== '')
+//       );
+//       const res = await api.get('/data', { params });
+//       setData(res.data.data);
+//     } catch (err) {
+//       console.error('Data fetch error:', err);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   /* ----------------------- DATA PROCESSING ----------------------- */
+
+//   const yearMap = {};
+//   data.forEach(item => {
+//     if (!item.end_year) return;
+//     if (!yearMap[item.end_year]) {
+//       yearMap[item.end_year] = { intensity: 0, relevance: 0, likelihood: 0, count: 0 };
+//     }
+//     yearMap[item.end_year].intensity += item.intensity || 0;
+//     yearMap[item.end_year].relevance += item.relevance || 0;
+//     yearMap[item.end_year].likelihood += item.likelihood || 0;
+//     yearMap[item.end_year].count += 1;
+//   });
+
+//   const yearData = Object.entries(yearMap).map(([year, v]) => ({
+//     year,
+//     intensity: +(v.intensity / v.count).toFixed(2),
+//     relevance: +(v.relevance / v.count).toFixed(2),
+//     likelihood: +(v.likelihood / v.count).toFixed(2),
+//   }));
+
+//   const intensityData = {};
+//   data.forEach(d => {
+//     if (!d.country) return;
+//     intensityData[d.country] = (intensityData[d.country] || 0) + (d.intensity || 0);
+//   });
+
+//   const barData = Object.entries(intensityData)
+//     .map(([k, v]) => ({ name: k, value: v }))
+//     .slice(0, 8);
+
+//   const topicData = {};
+//   data.forEach(d => {
+//     if (!d.topic) return;
+//     topicData[d.topic] = (topicData[d.topic] || 0) + 1;
+//   });
+
+//   const pieData = Object.entries(topicData).map(([k, v]) => ({
+//     name: k,
+//     value: v,
+//   }));
+
+//   /* ----------------------- CHART CONFIGS ----------------------- */
+
+//   const lineChartData = {
+//     labels: yearData.map(d => d.year),
+//     datasets: [
+//       {
+//         label: 'Intensity',
+//         data: yearData.map(d => d.intensity),
+//         borderColor: '#7367f0',
+//         backgroundColor: 'rgba(115,103,240,0.2)',
+//         fill: true,
+//         tension: 0.4
+//       }
+//     ]
+//   };
+
+//   const barChartData = {
+//     labels: barData.map(d => d.name),
+//     datasets: [
+//       {
+//         label: 'Intensity',
+//         data: barData.map(d => d.value),
+//         backgroundColor: '#28c76f'
+//       }
+//     ]
+//   };
+
+//   const pieChartData = {
+//     labels: pieData.map(d => d.name),
+//     datasets: [
+//       {
+//         data: pieData.map(d => d.value),
+//         backgroundColor: [
+//           '#7367f0', '#28c76f', '#ff9f43',
+//           '#ea5455', '#00cfe8', '#82868b'
+//         ]
+//       }
+//     ]
+//   };
+
+//   return (
+//     <Layout>
+//       <div className="mb-4">
+//         <h4 className="fw-bold">Analytics Dashboard</h4>
+//       </div>
+
+//       <div className="row g-4">
+
+//         <div className="col-xl-6">
+//           <div className="fw-bold">
+//             <h6>Line Chart (Trend)</h6>
+//             <Line data={lineChartData} />
+//           </div>
+//         </div>
+
+//         <div className="col-xl-6">
+//           <div className="fw-bold">
+//             <h6>Bar Chart</h6>
+//             <Bar data={barChartData} />
+//           </div>
+//         </div>
+
+//         <div className="col-xl-6">
+//           <div className="fw-bold">
+//             <h6>Pie Chart</h6>
+//             <Pie data={pieChartData} />
+//           </div>
+//         </div>
+
+//         <div className="col-xl-6">
+//           <div className="fw-bold">
+//             <h6>Area Chart</h6>
+//             <Line data={lineChartData} />
+//           </div>
+//         </div>
+
+//       </div>
+//     </Layout>
+//   );
+// };
+
+// export default ChartPage;
+
+
+import React, { useState, useEffect } from "react";
+import api from "../utils/api";
+import Layout from "../components/Layout";
 
 import {
   Chart as ChartJS,
@@ -655,12 +871,12 @@ import {
   ArcElement,
   Title,
   Tooltip,
-  Legend
-} from 'chart.js';
+  Legend,
+} from "chart.js";
 
-import { Line, Bar, Pie, Doughnut } from 'react-chartjs-2';
+import { Line, Bar, Pie } from "react-chartjs-2";
 
-// Register ChartJS components
+// Register ChartJS
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -675,183 +891,178 @@ ChartJS.register(
 
 const ChartPage = () => {
   const [data, setData] = useState([]);
-  const [filters, setFilters] = useState({
-    end_year: '',
-    topics: '',
-    sector: '',
-    region: '',
-    pestle: '',
-    source: '',
-    country: '',
-    city: '',
-  });
-
-  const [filterOptions, setFilterOptions] = useState({
-    endYears: [],
-    sectors: [],
-    regions: [],
-    pestles: [],
-    sources: [],
-    countries: [],
-    cities: [],
-    topics: [],
-  });
-
+  const [filters, setFilters] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchFilters();
     fetchData();
   }, []);
 
-  useEffect(() => {
-    fetchData();
-  }, [filters]);
-
-  const fetchFilters = async () => {
-    try {
-      const res = await api.get('/data/filters');
-      setFilterOptions(res.data.filters);
-    } catch (err) {
-      console.error('Filter fetch error:', err);
-    }
-  };
-
   const fetchData = async () => {
     try {
-      const params = Object.fromEntries(
-        Object.entries(filters).filter(([_, v]) => v !== '')
-      );
-      const res = await api.get('/data', { params });
+      const res = await api.get("/data");
       setData(res.data.data);
     } catch (err) {
-      console.error('Data fetch error:', err);
+      console.error("Data fetch error:", err);
     } finally {
       setLoading(false);
     }
   };
 
-  /* ----------------------- DATA PROCESSING ----------------------- */
+  /* ---------------- DATA PROCESSING ---------------- */
 
   const yearMap = {};
-  data.forEach(item => {
+  data.forEach((item) => {
     if (!item.end_year) return;
     if (!yearMap[item.end_year]) {
-      yearMap[item.end_year] = { intensity: 0, relevance: 0, likelihood: 0, count: 0 };
+      yearMap[item.end_year] = {
+        intensity: 0,
+        relevance: 0,
+        likelihood: 0,
+        count: 0,
+      };
     }
     yearMap[item.end_year].intensity += item.intensity || 0;
-    yearMap[item.end_year].relevance += item.relevance || 0;
-    yearMap[item.end_year].likelihood += item.likelihood || 0;
     yearMap[item.end_year].count += 1;
   });
 
   const yearData = Object.entries(yearMap).map(([year, v]) => ({
     year,
     intensity: +(v.intensity / v.count).toFixed(2),
-    relevance: +(v.relevance / v.count).toFixed(2),
-    likelihood: +(v.likelihood / v.count).toFixed(2),
   }));
 
-  const intensityData = {};
-  data.forEach(d => {
-    if (!d.country) return;
-    intensityData[d.country] = (intensityData[d.country] || 0) + (d.intensity || 0);
-  });
+  const barData = data
+    .filter((d) => d.country)
+    .slice(0, 8)
+    .map((d) => ({
+      name: d.country,
+      value: d.intensity || 0,
+    }));
 
-  const barData = Object.entries(intensityData)
-    .map(([k, v]) => ({ name: k, value: v }))
-    .slice(0, 8);
+  const pieData = data
+    .filter((d) => d.topic)
+    .slice(0, 6)
+    .map((d) => ({
+      name: d.topic,
+      value: 1,
+    }));
 
-  const topicData = {};
-  data.forEach(d => {
-    if (!d.topic) return;
-    topicData[d.topic] = (topicData[d.topic] || 0) + 1;
-  });
+  /* ---------------- CHART THEME (DARK SAFE) ---------------- */
 
-  const pieData = Object.entries(topicData).map(([k, v]) => ({
-    name: k,
-    value: v,
-  }));
+  const axisColor = getComputedStyle(document.documentElement)
+    .getPropertyValue("--text-color")
+    .trim();
 
-  /* ----------------------- CHART CONFIGS ----------------------- */
+  const gridColor = getComputedStyle(document.documentElement)
+    .getPropertyValue("--border-color")
+    .trim();
+
+  const commonOptions = {
+    plugins: {
+      legend: {
+        labels: {
+          color: axisColor,
+        },
+      },
+    },
+    scales: {
+      x: {
+        ticks: { color: axisColor },
+        grid: { color: gridColor },
+      },
+      y: {
+        ticks: { color: axisColor },
+        grid: { color: gridColor },
+      },
+    },
+  };
 
   const lineChartData = {
-    labels: yearData.map(d => d.year),
+    labels: yearData.map((d) => d.year),
     datasets: [
       {
-        label: 'Intensity',
-        data: yearData.map(d => d.intensity),
-        borderColor: '#7367f0',
-        backgroundColor: 'rgba(115,103,240,0.2)',
+        label: "Intensity",
+        data: yearData.map((d) => d.intensity),
+        borderColor: "#7367f0",
+        backgroundColor: "rgba(115,103,240,0.25)",
         fill: true,
-        tension: 0.4
-      }
-    ]
+        tension: 0.4,
+      },
+    ],
   };
 
   const barChartData = {
-    labels: barData.map(d => d.name),
+    labels: barData.map((d) => d.name),
     datasets: [
       {
-        label: 'Intensity',
-        data: barData.map(d => d.value),
-        backgroundColor: '#28c76f'
-      }
-    ]
+        label: "Intensity",
+        data: barData.map((d) => d.value),
+        backgroundColor: "#28c76f",
+      },
+    ],
   };
 
   const pieChartData = {
-    labels: pieData.map(d => d.name),
+    labels: pieData.map((d) => d.name),
     datasets: [
       {
-        data: pieData.map(d => d.value),
+        data: pieData.map((d) => d.value),
         backgroundColor: [
-          '#7367f0', '#28c76f', '#ff9f43',
-          '#ea5455', '#00cfe8', '#82868b'
-        ]
-      }
-    ]
+          "#7367f0",
+          "#28c76f",
+          "#ff9f43",
+          "#ea5455",
+          "#00cfe8",
+          "#82868b",
+        ],
+      },
+    ],
   };
+
+  if (loading) {
+    return <div className="page-bg p-5">Loading...</div>;
+  }
 
   return (
     <Layout>
-      <div className="mb-4">
-        <h4 className="fw-bold">Analytics Dashboard</h4>
-      </div>
-
-      <div className="row g-4">
-
-        <div className="col-xl-6">
-          <div className="card p-3">
-            <h6>Line Chart (Trend)</h6>
-            <Line data={lineChartData} />
-          </div>
+      <div className="page-bg">
+        <div className="mb-4">
+          <h4 className="fw-bold">Analytics Dashboard</h4>
         </div>
 
-        <div className="col-xl-6">
-          <div className="card p-3">
-            <h6>Bar Chart</h6>
-            <Bar data={barChartData} />
+        <div className="row g-4">
+          <div className="col-xl-6">
+            <div className="theme-card p-3">
+              <h6>Line Chart (Trend)</h6>
+              <Line data={lineChartData} options={commonOptions} />
+            </div>
+          </div>
+
+          <div className="col-xl-6">
+            <div className="theme-card p-3">
+              <h6>Bar Chart</h6>
+              <Bar data={barChartData} options={commonOptions} />
+            </div>
+          </div>
+
+          <div className="col-xl-6">
+            <div className="theme-card p-3">
+              <h6>Pie Chart</h6>
+              <Pie data={pieChartData} />
+            </div>
+          </div>
+
+          <div className="col-xl-6">
+            <div className="theme-card p-3">
+              <h6>Area Chart</h6>
+              <Line data={lineChartData} options={commonOptions} />
+            </div>
           </div>
         </div>
-
-        <div className="col-xl-6">
-          <div className="card p-3">
-            <h6>Pie Chart</h6>
-            <Pie data={pieChartData} />
-          </div>
-        </div>
-
-        <div className="col-xl-6">
-          <div className="card p-3">
-            <h6>Area Chart</h6>
-            <Line data={lineChartData} />
-          </div>
-        </div>
-
       </div>
     </Layout>
   );
 };
 
 export default ChartPage;
+

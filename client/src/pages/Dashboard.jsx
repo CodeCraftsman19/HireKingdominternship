@@ -249,7 +249,7 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
+      <header className="dashboard-card shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             <div>
@@ -270,7 +270,7 @@ const Dashboard = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+          <div className="dashboard-card rounded-xl shadow-sm p-6 border border-gray-100">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600 mb-1">Total Records</p>
@@ -282,7 +282,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+          <div className="dashboard-card rounded-xl shadow-sm p-6 border border-gray-100">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600 mb-1">Avg Intensity</p>
@@ -296,7 +296,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+          <div className="dashboard-card rounded-xl shadow-sm p-6 border border-gray-100">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600 mb-1">Avg Likelihood</p>
@@ -310,7 +310,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+          <div className="dashboard-card rounded-xl shadow-sm p-6 border border-gray-100">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600 mb-1">Avg Relevance</p>
@@ -326,7 +326,7 @@ const Dashboard = () => {
         </div>
 
         {/* Filters */}
-        <div className="bg-white rounded-xl shadow-sm p-6 mb-8 border border-gray-100">
+        <div className="dashboard-card rounded-xl shadow-sm p-6 mb-8 border border-gray-100">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
               <Filter size={20} />
@@ -474,7 +474,7 @@ const Dashboard = () => {
         {/* Charts Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           {/* Intensity by Country */}
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+          <div className="dashboard-card rounded-xl shadow-sm p-6 border border-gray-100">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Average Intensity by Country</h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={intensityChartData}>
@@ -488,7 +488,7 @@ const Dashboard = () => {
           </div>
 
           {/* Likelihood by Topic */}
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+          <div className="dashboard-card rounded-xl shadow-sm p-6 border border-gray-100">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Average Likelihood by Topic</h3>
             {likelihoodChartData.length > 0 ? (
               <ResponsiveContainer width="100%" height={300}>
@@ -532,7 +532,7 @@ const Dashboard = () => {
           </div>
 
           {/* Relevance by Region */}
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+          <div className="dashboard-card rounded-xl shadow-sm p-6 border border-gray-100">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Average Relevance by Region</h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={relevanceChartData}>
@@ -546,7 +546,7 @@ const Dashboard = () => {
           </div>
 
           {/* Sector Distribution */}
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+          <div className="dashboard-card rounded-xl shadow-sm p-6 border border-gray-100">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Sector Distribution</h3>
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
@@ -571,7 +571,7 @@ const Dashboard = () => {
         </div>
 
         {/* Year Trends */}
-        <div className="bg-white rounded-xl shadow-sm p-6 mb-6 border border-gray-100">
+        <div className="dashboard-card rounded-xl shadow-sm p-6 mb-6 border border-gray-100">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Trends Over Years (Intensity, Likelihood, Relevance)</h3>
           <ResponsiveContainer width="100%" height={400}>
             <LineChart data={yearChartData}>
@@ -588,7 +588,7 @@ const Dashboard = () => {
         </div>
 
         {/* City Distribution */}
-        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+        <div className="dashboard-card rounded-xl shadow-sm p-6 border border-gray-100">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Data Distribution by City</h3>
           <ResponsiveContainer width="100%" height={300}>
             <AreaChart data={cityChartData}>
